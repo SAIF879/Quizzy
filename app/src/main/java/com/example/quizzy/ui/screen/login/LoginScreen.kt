@@ -1,5 +1,6 @@
 package com.example.quizzy.ui.screen.login
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -26,6 +28,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -57,32 +61,58 @@ fun LoginScreen(
         verticalArrangement = Arrangement.SpaceBetween
     )
     {
-      Column(modifier = Modifier.fillMaxWidth() , verticalArrangement = Arrangement.Center , horizontalAlignment = Alignment.CenterHorizontally) {
-          Image(
-              painter = painterResource(id = R.drawable.welcome),
-              contentDescription = null,
-              modifier = Modifier
-                  .size(400.dp)
-                  .clip(CircleShape)
-          )
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-          WelcomeText("Welcome to\nQuizzy!")
-      }
+            Box(
+                modifier = Modifier
+                    .size(600.dp)
+                    .padding(top = 50.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                // Main image
+                Image(
+                    painter = painterResource(id = R.drawable.welcome),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .matchParentSize()
+                        .clip(CircleShape)
+                )
+
+                // Right dot
+                Box(
+                    modifier = Modifier
+                        .size(20.dp)
+                        .offset(x = 150.dp, y = 120.dp)
+                        .background(Color.Red, CircleShape)
+                )
+
+                // Left dot
+                Box(
+                    modifier = Modifier
+                        .size(20.dp)
+                        .offset(x = (-150).dp, y = 80.dp)
+                        .background(Color.Red, CircleShape)
+                )
+            }
+
+
+            WelcomeText("Welcome to\nQuizzy!")
+        }
+
+
         Column(modifier = Modifier.fillMaxWidth() ) {
             LoginCard(
                 schoolId,
                 studentId
             ){
-
             }
             Spacer(Modifier.size(30.dp))
-
         }
-
-
     }
-
-
 }
 
 @Composable
@@ -105,13 +135,13 @@ fun LoginCard(
 ) {
     Box(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp),
-            shape = RoundedCornerShape(20.dp),
+                .padding(horizontal = 10.dp),
+            shape = RoundedCornerShape(28.dp),
             colors = CardDefaults.cardColors(
                 containerColor = Color.White
             )
@@ -125,7 +155,7 @@ fun LoginCard(
 
                 Text(
                     "Let’s Get you Signed in",
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.SemiBold,
                     fontSize = 18.sp
                 )
 
@@ -147,34 +177,11 @@ fun LoginCard(
 
                 // Remove Spacer here
                 Spacer(Modifier.height(40.dp)) // optional small padding inside card
+
+
             }
         }
 
-        // Overlap the SemiCircleButton at the bottom
-        SemiCircleButton(
-            text = "Sign in",
-            onClick = onSignIn,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-        )
     }
 }
 
-
-@Composable
-fun SemiCircleButton(
-    modifier: Modifier,
-    text: String,
-    onClick: () -> Unit
-) {
-    Box(
-        modifier = modifier
-            .size(80.dp) // makes perfect semi-circle when clipped
-            .clip(RoundedCornerShape(topStart =40.dp , topEnd = 40.dp))
-            .background(Color.Black)
-            .clickable { onClick() },
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text, color = Color.White)
-    }
-}
