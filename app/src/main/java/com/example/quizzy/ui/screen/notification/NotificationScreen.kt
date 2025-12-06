@@ -45,9 +45,6 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun NotificationScreen(
     onBackClick: () -> Unit = {},
-    onSwitchChildClick: () -> Unit = {},
-    onLanguageClick: () -> Unit = {},
-    onLogoutClick: () -> Unit = {}
 ) {
     Scaffold(
         topBar = {
@@ -130,7 +127,7 @@ fun NotificationScreen(
                     icon = Icons.Default.SupervisorAccount,
                     title = "Switch Child",
                     subtitle = "Change active child profile",
-                    onClick = onSwitchChildClick
+                    onClick = {  }
                 )
             }
             item {
@@ -138,7 +135,7 @@ fun NotificationScreen(
                     icon = Icons.Default.Language,
                     title = "Language",
                     subtitle = "English",
-                    onClick = onLanguageClick
+                    onClick = {  }
                 )
             }
             item {
@@ -146,7 +143,7 @@ fun NotificationScreen(
                     icon = Icons.AutoMirrored.Filled.Logout,
                     title = "Logout",
                     subtitle = "Sign out of your account",
-                    onClick = onLogoutClick,
+                    onClick = { },
                     contentColor = Color.Red
                 )
             }

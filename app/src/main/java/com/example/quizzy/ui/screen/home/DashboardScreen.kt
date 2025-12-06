@@ -30,7 +30,9 @@ import com.example.quizzy.ui.screen.home.states.DashboardUiState
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun DashboardScreen() {
+fun DashboardScreen(
+    onNotificationsClick: () -> Unit = {}
+) {
     val viewModel: DashboardViewModel = koinViewModel()
     val state by viewModel.state.collectAsState()
 
@@ -63,7 +65,7 @@ fun DashboardScreen() {
                     DashboardTopAppBar(
                         userName = student.name,
                         className = student.classes,
-                        onNotificationClick = {}
+                        onNotificationClick = {onNotificationsClick.invoke()}
                     )
                 }
             ) { padding ->
