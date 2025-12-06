@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.quizzy.ui.screen.home.DashboardScreen
+import com.example.quizzy.ui.screen.login.LoginCheckScreen
 import com.example.quizzy.ui.screen.login.LoginScreen
 import com.example.quizzy.ui.screen.notification.NotificationScreen
 
@@ -17,13 +18,14 @@ fun AppNavGraph(startDestination: String = AppRoute.Login.route) {
         startDestination = startDestination
     ) {
         composable(AppRoute.Login.route) {
-            LoginScreen(
-                onLoginSuccess = {
-                    navController.navigate(AppRoute.Home.route) {
-                        popUpTo(AppRoute.Login.route) { inclusive = true }
-                    }
-                }
-            )
+//            LoginCheckScreen(
+//                onLoginSuccess = {
+//                    navController.navigate(AppRoute.Home.route) {
+//                        popUpTo(AppRoute.Login.route) { inclusive = true }
+//                    }
+//                }
+//            )
+            LoginScreen()
         }
 
         composable(AppRoute.Home.route) {

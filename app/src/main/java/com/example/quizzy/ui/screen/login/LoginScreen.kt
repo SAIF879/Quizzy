@@ -1,15 +1,25 @@
 package com.example.quizzy.ui.screen.login
 
-import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.quizzy.ui.screen.login.states.LoginState
+import androidx.compose.ui.unit.sp
+import com.example.quizzy.R
+import com.example.quizzy.ui.screen.login.composbales.StyledTextField
+
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -19,101 +29,105 @@ fun LoginScreen(
     onLoginSuccess: () -> Unit = {}
 ) {
     val loginState by viewModel.loginState.collectAsState()
-    val schoolId by viewModel.schoolId.collectAsState()
-    val studentId by viewModel.studentId.collectAsState()
+//    val schoolId by viewModel.schoolId.collectAsState()
+//    val studentId by viewModel.studentId.collectAsState()
 
-    // Log input and state changes
-    LaunchedEffect(schoolId, studentId, loginState) {
-        Log.d("LoginScreen", "SchoolID: $schoolId, StudentID: $studentId, State: $loginState")
-    }
+    val schoolId = remember { mutableStateOf("") }
+    val studentId = remember { mutableStateOf("") }
 
-    // Navigate on success
-    if (loginState is LoginState.Success) {
-        LaunchedEffect(Unit) {
-            Log.d("LoginScreen", "Login successful, navigating...")
-            onLoginSuccess()
+
+    Column (  modifier = Modifier
+        .fillMaxSize()
+        .background(Color.Black)
+        ,
+        verticalArrangement = Arrangement.SpaceBetween
+    )
+    {
+      Column(modifier = Modifier.fillMaxWidth() , verticalArrangement = Arrangement.Center , horizontalAlignment = Alignment.CenterHorizontally) {
+          Image(
+              painter = painterResource(id = R.drawable.welcome),
+              contentDescription = null,
+              modifier = Modifier
+                  .size(400.dp)
+                  .clip(CircleShape)
+          )
+
+          WelcomeText("Welcome to\nQuizzy!")
+      }
+        Column(modifier = Modifier.fillMaxWidth() ) {
+            LoginCard(
+                modifier = Modifier.fillMaxWidth(),
+                schoolId,
+                studentId
+            )
+
         }
+
+
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF121212)) // dark background
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+
+}
+
+@Composable
+fun WelcomeText(text: String){
+    Text(
+        text = text,
+        color = Color.White,
+        fontSize = 40.sp,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center,
+        lineHeight = 48.sp
+    )
+}
+
+@Composable
+fun LoginCard(
+    modifier: Modifier = Modifier,
+    schoolId: MutableState<String>,
+    studentId: MutableState<String>,
+) {
+    Card(
+        modifier = modifier
+            .padding(24.dp)
+            .fillMaxWidth()
+            .wrapContentHeight()              // <<< IMPORTANT
+            .widthIn(max = 420.dp),           // prevents huge card on large screens
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
     ) {
-        Text(
-            text = "Login",
-            style = MaterialTheme.typography.headlineLarge,
-            color = Color.White,
-            modifier = Modifier.padding(bottom = 32.dp)
-        )
-
-        // School ID
-        OutlinedTextField(
-            value = schoolId,
-            onValueChange = {
-                viewModel.schoolId.value = it
-                Log.d("LoginScreen", "SchoolID updated: $it")
-            },
-            label = { Text("School ID", color = Color.LightGray) },
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp),
-            enabled = loginState !is LoginState.Loading,
-            singleLine = true,
-        )
-
-        // Student ID
-        OutlinedTextField(
-            value = studentId,
-            onValueChange = {
-                viewModel.studentId.value = it
-                Log.d("LoginScreen", "StudentID updated: $it")
-            },
-            label = { Text("Student ID", color = Color.LightGray) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 24.dp),
-            enabled = loginState !is LoginState.Loading,
-            singleLine = true,
-        )
-
-        // Error Message
-        if (loginState is LoginState.Error) {
-            Text(
-                text = (loginState as LoginState.Error).message,
-                color = Color.Red,
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
-            )
-        }
-
-        // Login Button
-        Button(
-            onClick = {
-                Log.d("LoginScreen", "Login button clicked with SchoolID=$schoolId and StudentID=$studentId")
-                viewModel.login()
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
-            enabled = loginState !is LoginState.Loading,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Cyan,
-                contentColor = Color.Black
-            )
+                .padding(20.dp)
+                .wrapContentHeight(),         // <<< ensures no forced large height
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            if (loginState is LoginState.Loading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(24.dp),
-                    strokeWidth = 2.dp,
-                    color = Color.Black
-                )
-            } else {
+            Text(
+                text = "Let’s Get you Signed in",
+                color = Color.Black,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp
+            )
+
+            StyledTextField(
+                value = schoolId.value,
+                onValueChange = { schoolId.value = it },
+                hint = "School ID"
+            )
+
+            StyledTextField(
+                value = studentId.value,
+                onValueChange = { studentId.value = it },
+                hint = "Student ID"
+            )
+
+            Button(
+                onClick = {},
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Text("Login")
             }
         }
