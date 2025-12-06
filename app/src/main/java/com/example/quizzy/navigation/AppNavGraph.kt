@@ -27,7 +27,7 @@ fun AppNavGraph(startDestination: String = AppRoute.Login.route) {
             LoginScreen()
         }
 
-        composable(AppRoute.Home.route) {
+        composable(AppRoute.Dashboard.route) {
             DashboardScreen(
                 onNotificationsClick = {
                     navController.navigate(AppRoute.Notifications.route)
