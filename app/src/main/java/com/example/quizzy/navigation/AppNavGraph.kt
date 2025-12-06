@@ -5,12 +5,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.quizzy.ui.screen.home.DashboardScreen
-import com.example.quizzy.ui.screen.login.LoginCheckScreen
 import com.example.quizzy.ui.screen.login.LoginScreen
 import com.example.quizzy.ui.screen.notification.NotificationScreen
 
 @Composable
-fun AppNavGraph(startDestination: String = AppRoute.Login.route) {
+fun AppNavGraph(startDestination: String = AppRoute.Home.route) {
     val navController = rememberNavController()
 
     NavHost(

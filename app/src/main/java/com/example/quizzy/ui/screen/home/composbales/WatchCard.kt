@@ -36,24 +36,22 @@ fun WatchCard(
     modifier: Modifier = Modifier
 ) {
     val borderColor = Color(0xFF996EB5)
-    val backgroundColor = borderColor.copy(alpha = 0.1f) // Lighter alpha version of border color
+    val backgroundColor = borderColor.copy(alpha = 0.1f)
 
     Column(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .border(
-                width = 2.dp,
+                width = 1.dp,
                 color = borderColor,
                 shape = RoundedCornerShape(16.dp)
             )
             .background(backgroundColor)
-            .padding(16.dp),
+            .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // I'm using a placeholder for your drawable.
-        // Replace R.drawable.ic_focused_character with your actual drawable resource ID.
         Image(
             painter = painterResource(id = R.drawable.ic_focused_character),
             contentDescription = "Focused Character",

@@ -20,7 +20,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
@@ -35,7 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.quizzy.R // Make sure to import your R file
+import com.example.quizzy.R
 
 @Composable
 fun WeeklyOverviewCard(modifier: Modifier = Modifier) {
@@ -52,34 +52,19 @@ fun WeeklyOverviewCard(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         // --- Quiz Streak Section ---
-        SectionHeader(title = "Quiz Streak", imageRes = R.drawable.ic_quiz)
+        SectionHeader(title = "Quiz Streak", imageRes = R.drawable.ic_question_card)
         QuizStreak()
-        Divider(color = Color.LightGray)
-
-        // --- Accuracy Section ---
-        SectionHeader(title = "Accuracy", imageRes = R.drawable.ic_accuracy)
+        SectionHeader(title = "Accuracy", imageRes = R.drawable.ic_target)
         Text(text = "68% correct", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
         Spacer(modifier = Modifier.height(4.dp))
-        LinearProgressIndicator(
-            progress = { 0.68f },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(8.dp),
-            color = Color.Red,
-            trackColor = Color.Red.copy(alpha = 0.2f),
-            strokeCap = StrokeCap.Round
-        )
+        AnimatedProgressBar()
         Spacer(modifier = Modifier.height(8.dp))
-        Divider(color = Color.LightGray)
-
-        // --- Performance by Topic Section ---
         SectionHeader(title = "Performance by Topic", imageRes = R.drawable.ic_bar_graph)
         PerformanceTopic("Newton's Laws Of Motion", Performance.UP)
         PerformanceTopic("Sources Of Energy", Performance.UP)
         PerformanceTopic("Light Reflection And Refraction", Performance.DOWN)
         Spacer(modifier = Modifier.height(16.dp))
 
-        // --- More Details Button ---
         Button(
             onClick = { /*TODO*/ },
             modifier = Modifier.fillMaxWidth(),
@@ -98,23 +83,31 @@ fun WeeklyOverviewCard(modifier: Modifier = Modifier) {
         }
     }
 }
-
 @Composable
 private fun SectionHeader(title: String, imageRes: Int) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+    Column(
+        modifier = Modifier.fillMaxWidth()
     ) {
-        Text(text = title, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-        // Replace with your actual drawable
-        Image(
-            painter = painterResource(id = imageRes),
-            contentDescription = title,
-            modifier = Modifier.size(32.dp)
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = title, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+
+            Image(
+                painter = painterResource(id = imageRes),
+                contentDescription = title,
+                modifier = Modifier.size(32.dp)
+            )
+        }
+
+        CustomHorizontalDivider()
+
     }
 }
+
+
 
 @Composable
 private fun QuizStreak() {

@@ -72,7 +72,8 @@ fun DashboardScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(padding),
+                        .padding(padding)
+                        .padding(horizontal = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     item {
@@ -130,9 +131,7 @@ fun DashboardScreen(
                             fontSize = 25.sp,
                             fontWeight = FontWeight.Bold
                         )
-
                     }
-
                     item {
                         WeeklyOverviewCard()
                     }

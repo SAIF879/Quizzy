@@ -20,8 +20,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.SupervisorAccount
+import androidx.compose.material.icons.outlined.SupervisorAccount
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -108,13 +110,10 @@ fun NotificationScreen(
                     indicatorColor = Color(0xFF66BB6A) // Green
                 )
             }
-
-            // --- Spacer ---
             item {
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
-            // --- Settings Section ---
             item {
                 Text(
                     text = "Settings",
@@ -124,7 +123,7 @@ fun NotificationScreen(
             }
             item {
                 SettingsItem(
-                    icon = Icons.Default.SupervisorAccount,
+                    icon = Icons.Outlined.SupervisorAccount,
                     title = "Switch Child",
                     subtitle = "Change active child profile",
                     onClick = {  }
@@ -140,11 +139,11 @@ fun NotificationScreen(
             }
             item {
                 SettingsItem(
-                    icon = Icons.AutoMirrored.Filled.Logout,
+                    icon = Icons.AutoMirrored.Outlined.Logout,
                     title = "Logout",
                     subtitle = "Sign out of your account",
                     onClick = { },
-                    contentColor = Color.Red
+                    contentColor = Color.Black
                 )
             }
         }
@@ -161,9 +160,12 @@ fun NotificationItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min) // Ensures row children can fill height
-            .clip(RoundedCornerShape(8.dp))
-            .background(indicatorColor.copy(alpha = 0.1f))
-            .padding(start = 8.dp),
+            .clip(RoundedCornerShape(
+                topStart = 0.dp,
+                bottomStart = 0.dp,
+                topEnd = 2.dp,
+                bottomEnd = 2.dp))
+            .background(indicatorColor.copy(alpha = 0.1f)),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
