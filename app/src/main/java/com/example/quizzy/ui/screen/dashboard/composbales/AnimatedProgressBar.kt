@@ -20,12 +20,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AnimatedProgressBar(percentage: Int) {
 
-    // Convert to 0f–1f range
     val targetProgress = (percentage / 100f).coerceIn(0f, 1f)
 
     var startAnimation by remember { mutableStateOf(false) }
 
-    // Re-animate whenever percentage changes
     LaunchedEffect(percentage) {
         startAnimation = true
     }

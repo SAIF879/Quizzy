@@ -5,7 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AvailabilityDto(
-
     @SerialName("status") var status: String? = null
-
 )

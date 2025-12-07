@@ -5,7 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AccuracyDto(
-
     @SerialName("current") var current: String? = null
-
 )

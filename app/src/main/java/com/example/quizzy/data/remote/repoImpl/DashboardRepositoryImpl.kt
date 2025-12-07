@@ -6,7 +6,6 @@ import com.example.quizzy.data.remote.util.safeApiCall
 import com.example.quizzy.domain.repo.DashboardRepository
 import com.example.quizzy.domain.util.DashboardResult
 
-// data/repository/DashboardRepositoryImpl.kt
 class DashboardRepositoryImpl(
     private val apiService: ApiService
 ) : DashboardRepository {

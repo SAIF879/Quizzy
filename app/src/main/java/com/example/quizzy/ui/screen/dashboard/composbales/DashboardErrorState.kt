@@ -69,7 +69,6 @@ fun DashboardErrorState(
             }
         }
 
-        // Add empty spacer items if you want some extra space at bottom
         items(1) {
             Spacer(modifier = Modifier.height(200.dp))
         }
