@@ -1,5 +1,4 @@
 package com.example.quizzy.ui.screen.notification
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +22,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -57,7 +55,8 @@ fun NotificationScreen(
                         Icon(
                             painter = painterResource(id = R.drawable.left_nav_icons),
                             modifier = Modifier.size(28.dp),
-                            contentDescription = "back_press icon"
+                            contentDescription = "back_press icon",
+                            tint = Color.Black
                         )
                     }
                 },
@@ -225,8 +224,6 @@ fun SettingsItem(
         }
     }
 }
-
-
 @Preview(showBackground = true, device = "id:pixel_6")
 @Composable
 private fun NotificationScreenPreview() {

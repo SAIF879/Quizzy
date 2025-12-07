@@ -1,16 +1,8 @@
 package com.example.quizzy.data.remote.mapper
 
-import com.example.quizzy.data.remote.dto.PerformanceByTopicDto
-import com.example.quizzy.data.remote.dto.ResultDto
-import com.example.quizzy.data.remote.dto.StudentDto
-import com.example.quizzy.data.remote.dto.TodaySummary
-import com.example.quizzy.data.remote.dto.WeeklyOverview
-import com.example.quizzy.domain.model.PerformanceByTopic
-import com.example.quizzy.domain.model.Student
-import com.example.quizzy.domain.model.TodaySummaryModel
-import com.example.quizzy.domain.model.WeeklyOverviewModel
+import com.example.quizzy.data.remote.dto.*
+import com.example.quizzy.domain.model.*
 
-// StudentDto -> Student
 fun StudentDto.toDomain(): Student = Student(
     name = this.name.orEmpty(),
     classes = this.classes.orEmpty(),
@@ -19,7 +11,6 @@ fun StudentDto.toDomain(): Student = Student(
     accuracyCurrent = this.accuracy?.current.orEmpty()
 )
 
-// TodaySummary -> TodaySummaryModel
 fun TodaySummary.toDomain(): TodaySummaryModel = TodaySummaryModel(
     mood = this.mood.orEmpty(),
     description = this.description.orEmpty(),
@@ -28,29 +19,32 @@ fun TodaySummary.toDomain(): TodaySummaryModel = TodaySummaryModel(
     characterImage = this.characterImage.orEmpty()
 )
 
-// PerformanceByTopicDto -> PerformanceByTopic
 fun PerformanceByTopicDto.toDomain(): PerformanceByTopic = PerformanceByTopic(
     topic = this.topic.orEmpty(),
     trend = this.trend.orEmpty()
 )
 
-// WeeklyOverview -> WeeklyOverviewModel
+fun QuizStreakItemDto.toDomain(): QuizStreakItem = QuizStreakItem(
+    day = this.day.orEmpty(),
+    status = this.status.orEmpty()
+)
+
 fun WeeklyOverview.toDomain(): WeeklyOverviewModel = WeeklyOverviewModel(
-    quizStreak = this.quizStreak.map { it.attempts ?: 0 },
-    overallAccuracyPercentage = this.overallAccuracy?.percentage ?: 0,
-    overallAccuracyLabel = this.overallAccuracy?.label.orEmpty(),
+    quizStreak = this.quizStreak.map { it.toDomain() },
+    overallAccuracy = OverallAccuracy(
+        percentage = this.overallAccuracy?.percentage ?: 0,
+        label = this.overallAccuracy?.label.orEmpty()
+    ),
     performanceByTopic = this.performanceByTopic.map { it.toDomain() }
 )
 
-// ResultDto -> Result
-fun ResultDto.toDomain(): com.example.quizzy.domain.model.Result =
-    com.example.quizzy.domain.model.Result(
-        student = this.student?.toDomain() ?: Student("", "", "", 0, ""),
-        todaySummary = this.todaySummary?.toDomain() ?: TodaySummaryModel("", "", "", "", ""),
-        weeklyOverview = this.weeklyOverview?.toDomain() ?: WeeklyOverviewModel(
-            emptyList(),
-            0,
-            "",
-            emptyList()
-        )
+
+fun ResultDto.toDomain(): Result = Result(
+    student = this.student?.toDomain() ?: Student("", "", "", 0, ""),
+    todaySummary = this.todaySummary?.toDomain() ?: TodaySummaryModel("", "", "", "", ""),
+    weeklyOverview = this.weeklyOverview?.toDomain() ?: WeeklyOverviewModel(
+        quizStreak = emptyList(),
+        overallAccuracy = OverallAccuracy(percentage = 0, label = ""),
+        performanceByTopic = emptyList()
     )
+)

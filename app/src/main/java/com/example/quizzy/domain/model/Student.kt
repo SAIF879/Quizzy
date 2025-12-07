@@ -7,3 +7,4 @@ data class Student(
     val quizAttempts: Int,
     val accuracyCurrent: String
 )
+

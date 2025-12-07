@@ -55,7 +55,11 @@ fun DashboardScreen(
         }
 
         is DashboardUiState.Success -> {
-            val student = (state as DashboardUiState.Success).data.student
+          val result = (state as DashboardUiState.Success).data
+            val student = result.student
+            val todaySummary = result.todaySummary
+            val weeklyOverview = result.weeklyOverview
+
 
             Scaffold(
                 modifier = Modifier.fillMaxSize(),
@@ -113,8 +117,12 @@ fun DashboardScreen(
                         )
 
                     }
-                    item {
-                        WatchCard()
+                        item {
+                            WatchCard(
+                                mood = todaySummary.mood,
+                                description = todaySummary.description,
+                                actionText = todaySummary.recommendedVideoActionText,
+                            )
                     }
                     item {
                         Text(
@@ -125,7 +133,9 @@ fun DashboardScreen(
                         )
                     }
                     item {
-                        WeeklyOverviewCard()
+                        WeeklyOverviewCard(
+                            weeklyOverview = weeklyOverview,
+                        )
                     }
 
                 }

@@ -1,6 +1,6 @@
 package com.example.quizzy.ui.screen.home.composbales
 
-
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,13 +26,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.quizzy.R // Assuming your drawable is in res/drawable
+import com.example.quizzy.R
 
 @Composable
 fun WatchCard(
+    mood: String,
+    description: String,
+    actionText: String,
     modifier: Modifier = Modifier
 ) {
     val borderColor = Color(0xFF996EB5)
@@ -54,27 +56,30 @@ fun WatchCard(
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_focused_character),
-            contentDescription = "Focused Character",
+            contentDescription = "Character Mood Image",
             modifier = Modifier.size(80.dp)
         )
 
+
         Text(
-            text = "Focused",
+            text = mood,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             color = borderColor
         )
 
         Text(
-            text = "\"Struggles with Apply-level Math today.\"",
+            text = description,
             fontSize = 16.sp,
             textAlign = TextAlign.Center,
             color = Color.Gray
         )
 
         Button(
-            onClick = { /* TODO: Handle watch video click */ },
-            modifier = Modifier.fillMaxWidth().padding(5.dp),
+            onClick = { /* TODO */ },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(5.dp),
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Black,
@@ -90,11 +95,10 @@ fun WatchCard(
                     contentDescription = "Play Icon"
                 )
                 Text(
-                    text = "Watch: Apply Pythagoras Theorem",
+                    text = actionText,
                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
                 )
             }
         }
     }
 }
-

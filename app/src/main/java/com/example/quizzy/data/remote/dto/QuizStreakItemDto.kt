@@ -4,6 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class QuizDto(
-    @SerialName("attempts") var attempts: Int? = null,
+data class QuizStreakItemDto(
+    @SerialName("day") val day: String? = null,
+    @SerialName("status") val status: String? = null
 )

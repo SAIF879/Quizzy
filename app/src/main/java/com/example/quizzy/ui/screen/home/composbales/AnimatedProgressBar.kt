@@ -18,16 +18,20 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AnimatedProgressBar() {
+fun AnimatedProgressBar(percentage: Int) {
+
+    // Convert to 0f–1f range
+    val targetProgress = (percentage / 100f).coerceIn(0f, 1f)
 
     var startAnimation by remember { mutableStateOf(false) }
 
-    LaunchedEffect(Unit) {
-        startAnimation = true   // triggers the animation ONE time
+    // Re-animate whenever percentage changes
+    LaunchedEffect(percentage) {
+        startAnimation = true
     }
 
     val animatedProgress by animateFloatAsState(
-        targetValue = if (startAnimation) 0.68f else 0f,
+        targetValue = if (startAnimation) targetProgress else 0f,
         animationSpec = tween(
             durationMillis = 1200,
             easing = FastOutSlowInEasing
@@ -36,12 +40,12 @@ fun AnimatedProgressBar() {
     )
 
     LinearProgressIndicator(
-    progress = { animatedProgress },
-    modifier = Modifier
-                .fillMaxWidth()
-                .height(8.dp),
-    color = Color.Red,
-    trackColor = Color.Red.copy(alpha = 0.2f),
-    strokeCap = StrokeCap.Round,
+        progress = { animatedProgress },
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(8.dp),
+        color = Color.Red,
+        trackColor = Color.Red.copy(alpha = 0.2f),
+        strokeCap = StrokeCap.Round
     )
 }
