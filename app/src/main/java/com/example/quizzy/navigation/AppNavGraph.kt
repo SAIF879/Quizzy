@@ -17,14 +17,11 @@ fun AppNavGraph(startDestination: String = AppRoute.Login.route) {
         startDestination = startDestination
     ) {
         composable(AppRoute.Login.route) {
-//            LoginCheckScreen(
-//                onLoginSuccess = {
-//                    navController.navigate(AppRoute.Home.route) {
-//                        popUpTo(AppRoute.Login.route) { inclusive = true }
-//                    }
-//                }
-//            )
-            LoginScreen()
+            LoginScreen(onLoginSuccess = {
+                navController.navigate(AppRoute.Dashboard.route) {
+                    popUpTo(AppRoute.Login.route) { inclusive = true }
+                }
+            })
         }
 
         composable(AppRoute.Dashboard.route) {

@@ -1,36 +1,16 @@
 package com.example.quizzy.ui.screen.login
 
-import androidx.compose.foundation.Canvas
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,8 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.quizzy.R
 import com.example.quizzy.ui.screen.login.composbales.StyledTextField
+import com.example.quizzy.ui.screen.login.states.LoginState
 import org.koin.androidx.compose.koinViewModel
-
 
 @Composable
 fun LoginScreen(
@@ -48,33 +28,33 @@ fun LoginScreen(
     onLoginSuccess: () -> Unit = {}
 ) {
     val loginState by viewModel.loginState.collectAsState()
-//    val schoolId by viewModel.schoolId.collectAsState()
-//    val studentId by viewModel.studentId.collectAsState()
+    var schoolId by remember { mutableStateOf("") }
+    var studentId by remember { mutableStateOf("") }
 
-    val schoolId = remember { mutableStateOf("") }
-    val studentId = remember { mutableStateOf("") }
+    LaunchedEffect(loginState) {
+        if (loginState is LoginState.Success) {
+            kotlinx.coroutines.delay(800)
+            onLoginSuccess()
+        }
+    }
 
-
-    Column (  modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Black)
-        ,
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black),
         verticalArrangement = Arrangement.SpaceBetween
-    )
-    {
+    ) {
+        // Top decorative section
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Box(
                 modifier = Modifier
                     .size(600.dp)
                     .padding(top = 50.dp),
                 contentAlignment = Alignment.Center
             ) {
-                // Main image
                 Image(
                     painter = painterResource(id = R.drawable.welcome),
                     contentDescription = null,
@@ -83,7 +63,6 @@ fun LoginScreen(
                         .clip(CircleShape)
                 )
 
-                // Right dot
                 Box(
                     modifier = Modifier
                         .size(20.dp)
@@ -91,7 +70,6 @@ fun LoginScreen(
                         .background(Color(0xFFFFDF92), CircleShape)
                 )
 
-                // Left dot
                 Box(
                     modifier = Modifier
                         .size(20.dp)
@@ -99,64 +77,75 @@ fun LoginScreen(
                         .background(Color(0XFFDFF8FB), CircleShape)
                 )
 
-                // Vector image below left dot, tilted
                 Image(
-                    painter = painterResource(id = R.drawable.ic_pie), // replace with your vector asset
+                    painter = painterResource(id = R.drawable.ic_pie),
                     contentDescription = null,
                     modifier = Modifier
-                        .size(40.dp) // adjust size as needed
-                        .offset(x = (-200).dp, y = 150.dp) // closer to left edge, below left dot
+                        .size(40.dp)
+                        .offset(x = (-200).dp, y = 150.dp)
                 )
 
                 Image(
                     painter = painterResource(id = R.drawable.ic_pw),
                     contentDescription = null,
-                    modifier = Modifier.padding(top = 25.dp)
-                        .size(50.dp) // adjust size as needed
-                        .offset(
-                            x = (600.dp * 0.1f), // 30% of parent Box width
-                            y = (-250).dp          // move above main circle
-                        )
+                    modifier = Modifier
+                        .size(50.dp)
+                        .offset(x = (600.dp * 0.1f), y = (-250).dp)
                 )
-
-//                Image(
-//                    painter = painterResource(id = R.drawable.ic_ellipse_left),
-//                    contentDescription = null,
-//                    modifier = Modifier
-//                        .size(40.dp)
-//                        .offset(x = (-280).dp, y = (-220).dp)
-//                )
-//
-//                // Top-right decorative vector
-//                Image(
-//                    painter = painterResource(id = R.drawable.ic_ellipse_right),
-//                    contentDescription = null,
-//                    modifier = Modifier
-//                        .size(40.dp)
-//                        .offset(x = (280).dp, y = (-220).dp)
-//                )
-
             }
-
 
             WelcomeText("Welcome to\nQuizzy!")
         }
 
-
-
-        Column(modifier = Modifier.fillMaxWidth() ) {
+        // Bottom login card
+        AnimatedVisibility(
+            visible = loginState !is LoginState.Success,
+            modifier = Modifier.fillMaxWidth()
+        ) {
             LoginCard(
-                schoolId,
-                studentId
-            ){
-            }
-            Spacer(Modifier.size(30.dp))
+                schoolId = schoolId,
+                studentId = studentId,
+                onSchoolIdChange = { schoolId = it },
+                onStudentIdChange = { studentId = it },
+                loginState = loginState,
+                onLoginClick = {
+                    viewModel.login(schoolId, studentId)
+                }
+            )
         }
+
+        if (loginState is LoginState.Success) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                shape = RoundedCornerShape(28.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.Black)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(24.dp)
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        "Signing you in...",
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 18.sp,
+                        color = Color.White
+                    )
+                    Spacer(Modifier.height(16.dp))
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(30.dp))
     }
 }
 
+
 @Composable
-fun WelcomeText(text: String){
+fun WelcomeText(text: String) {
     Text(
         text = text,
         color = Color.White,
@@ -169,22 +158,22 @@ fun WelcomeText(text: String){
 
 @Composable
 fun LoginCard(
-    schoolId: MutableState<String>,
-    studentId: MutableState<String>,
-    onSignIn: () -> Unit
+    schoolId: String,
+    studentId: String,
+    onSchoolIdChange: (String) -> Unit,
+    onStudentIdChange: (String) -> Unit,
+    loginState: LoginState,
+    onLoginClick: () -> Unit
 ) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth()
     ) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 10.dp),
             shape = RoundedCornerShape(28.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = Color.White
-            )
+            colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
             Column(
                 modifier = Modifier
@@ -192,7 +181,6 @@ fun LoginCard(
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Text(
                     "Let’s Get you Signed in",
                     fontWeight = FontWeight.SemiBold,
@@ -202,26 +190,56 @@ fun LoginCard(
                 Spacer(Modifier.height(16.dp))
 
                 StyledTextField(
-                    value = schoolId.value,
-                    onValueChange = { schoolId.value = it },
+                    value = schoolId,
+                    onValueChange = onSchoolIdChange,
                     hint = "School ID"
                 )
 
                 Spacer(Modifier.height(12.dp))
 
                 StyledTextField(
-                    value = studentId.value,
-                    onValueChange = { studentId.value = it },
+                    value = studentId,
+                    onValueChange = onStudentIdChange,
                     hint = "Student ID"
                 )
 
-                // Remove Spacer here
-                Spacer(Modifier.height(40.dp)) // optional small padding inside card
+                Spacer(Modifier.height(24.dp))
 
+                // Error message
+                if (loginState is LoginState.Error) {
+                    Text(
+                        text = loginState.message,
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(Modifier.height(16.dp))
+                }
 
+                // Sign In button
+                Button(
+                    onClick = onLoginClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    enabled = loginState !is LoginState.Loading,
+                    shape = RoundedCornerShape(16.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Black,
+                        contentColor = Color.White
+                    )
+                ) {
+                    if (loginState is LoginState.Loading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            strokeWidth = 2.dp,
+                            color = Color.White
+                        )
+                    } else {
+                        Text("Sign in", fontSize = 16.sp)
+                    }
+                }
             }
         }
-
     }
 }
-

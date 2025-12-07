@@ -43,95 +43,95 @@ import com.example.quizzy.R
 import com.example.quizzy.ui.screen.login.states.LoginState
 import org.koin.androidx.compose.koinViewModel
 
-@Composable
-fun LoginCheckScreen(
-    viewModel: LoginViewModel = koinViewModel(),
-    onLoginSuccess: () -> Unit = {}
-) {
-    val loginState by viewModel.loginState.collectAsState()
-    var schoolId by remember { mutableStateOf("") }
-    var studentId by remember { mutableStateOf("") }
-
-    // Navigate on success
-    LaunchedEffect(loginState) {
-        if (loginState is LoginState.Success) {
-            onLoginSuccess()
-        }
-    }
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black)
-    ) {
-        // Top illustrative part
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.TopCenter)
-                .padding(top = 60.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 32.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.image_man),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(140.dp)
-                        .offset(x = (-80).dp, y = 20.dp)
-                        .clip(CircleShape)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.image_man),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(100.dp)
-                        .offset(x = 60.dp, y = (-20).dp)
-                        .clip(CircleShape)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.image_man),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(110.dp)
-                        .offset(x = 30.dp, y = 80.dp)
-                        .clip(CircleShape)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(100.dp))
-
-            Text(
-                text = "Welcome to\nQuizzy!",
-                color = Color.White,
-                fontSize = 40.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                lineHeight = 48.sp
-            )
-        }
-
-        // Bottom sheet for login form
-        LoginSheet(
-            modifier = Modifier.align(Alignment.BottomCenter),
-            schoolId = schoolId,
-            onSchoolIdChange = { schoolId = it },
-            studentId = studentId,
-            onStudentIdChange = { studentId = it },
-            loginState = loginState,
-            onLoginClick = {
-                viewModel.schoolId.value = schoolId
-                viewModel.studentId.value = studentId
-                viewModel.login()
-            }
-        )
-    }
-}
+//@Composable
+//fun LoginCheckScreen(
+//    viewModel: LoginViewModel = koinViewModel(),
+//    onLoginSuccess: () -> Unit = {}
+//) {
+//    val loginState by viewModel.loginState.collectAsState()
+//    var schoolId by remember { mutableStateOf("") }
+//    var studentId by remember { mutableStateOf("") }
+//
+//    // Navigate on success
+//    LaunchedEffect(loginState) {
+//        if (loginState is LoginState.Success) {
+//            onLoginSuccess()
+//        }
+//    }
+//
+//    Box(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .background(Color.Black)
+//    ) {
+//        // Top illustrative part
+//        Column(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .align(Alignment.TopCenter)
+//                .padding(top = 60.dp),
+//            horizontalAlignment = Alignment.CenterHorizontally
+//        ) {
+//            Box(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(horizontal = 32.dp),
+//                contentAlignment = Alignment.Center
+//            ) {
+//                Image(
+//                    painter = painterResource(id = R.drawable.image_man),
+//                    contentDescription = null,
+//                    modifier = Modifier
+//                        .size(140.dp)
+//                        .offset(x = (-80).dp, y = 20.dp)
+//                        .clip(CircleShape)
+//                )
+//                Image(
+//                    painter = painterResource(id = R.drawable.image_man),
+//                    contentDescription = null,
+//                    modifier = Modifier
+//                        .size(100.dp)
+//                        .offset(x = 60.dp, y = (-20).dp)
+//                        .clip(CircleShape)
+//                )
+//                Image(
+//                    painter = painterResource(id = R.drawable.image_man),
+//                    contentDescription = null,
+//                    modifier = Modifier
+//                        .size(110.dp)
+//                        .offset(x = 30.dp, y = 80.dp)
+//                        .clip(CircleShape)
+//                )
+//            }
+//
+//            Spacer(modifier = Modifier.height(100.dp))
+//
+//            Text(
+//                text = "Welcome to\nQuizzy!",
+//                color = Color.White,
+//                fontSize = 40.sp,
+//                fontWeight = FontWeight.Bold,
+//                textAlign = TextAlign.Center,
+//                lineHeight = 48.sp
+//            )
+//        }
+//
+//        // Bottom sheet for login form
+//        LoginSheet(
+//            modifier = Modifier.align(Alignment.BottomCenter),
+//            schoolId = schoolId,
+//            onSchoolIdChange = { schoolId = it },
+//            studentId = studentId,
+//            onStudentIdChange = { studentId = it },
+//            loginState = loginState,
+//            onLoginClick = {
+//                viewModel.schoolId.value = schoolId
+//                viewModel.studentId.value = studentId
+//                viewModel.login()
+//            }
+//        )
+//    }
+//}
 
 @Composable
 private fun LoginSheet(
@@ -240,10 +240,4 @@ private fun LoginSheet(
             }
         }
     }
-}
-
-@Preview(showBackground = true, device = "id:pixel_6")
-@Composable
-private fun LoginCheckScreenPreview() {
-    LoginCheckScreen()
 }
