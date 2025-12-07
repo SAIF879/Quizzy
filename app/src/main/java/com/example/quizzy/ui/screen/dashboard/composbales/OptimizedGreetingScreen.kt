@@ -1,4 +1,4 @@
-package com.example.quizzy.ui.screen.home.composbales
+package com.example.quizzy.ui.screen.dashboard.composbales
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column

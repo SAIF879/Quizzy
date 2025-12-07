@@ -1,10 +1,10 @@
-package com.example.quizzy.ui.screen.home
+package com.example.quizzy.ui.screen.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.quizzy.domain.usecase.GetDashboardUseCase
 import com.example.quizzy.domain.util.DashboardResult
-import com.example.quizzy.ui.screen.home.states.DashboardUiState
+import com.example.quizzy.ui.screen.dashboard.states.DashboardUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

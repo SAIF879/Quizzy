@@ -1,4 +1,4 @@
-package com.example.quizzy.domain.model
+package com.example.quizzy.ui.screen.dashboard.composbales
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

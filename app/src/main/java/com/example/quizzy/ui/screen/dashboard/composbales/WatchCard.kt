@@ -1,4 +1,4 @@
-package com.example.quizzy.ui.screen.home.composbales
+package com.example.quizzy.ui.screen.dashboard.composbales
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

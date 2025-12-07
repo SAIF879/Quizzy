@@ -1,32 +1,29 @@
-package com.example.quizzy.ui.screen.home
+package com.example.quizzy.ui.screen.dashboard
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.quizzy.R
-import com.example.quizzy.domain.model.DashboardErrorState
-import com.example.quizzy.ui.screen.home.composbales.DashboardTopAppBar
-import com.example.quizzy.ui.screen.home.composbales.ShimmerLoadingScreen
-import com.example.quizzy.ui.screen.home.composbales.SingleStatCard
-import com.example.quizzy.ui.screen.home.composbales.WatchCard
-import com.example.quizzy.ui.screen.home.composbales.WeeklyOverviewCard
-import com.example.quizzy.ui.screen.home.states.DashboardUiState
+import com.example.quizzy.ui.screen.dashboard.composbales.DashboardErrorState
+import com.example.quizzy.ui.screen.dashboard.composbales.DashboardTopAppBar
+import com.example.quizzy.ui.screen.dashboard.composbales.ShimmerLoadingScreen
+import com.example.quizzy.ui.screen.dashboard.composbales.SingleStatCard
+import com.example.quizzy.ui.screen.dashboard.composbales.WatchCard
+import com.example.quizzy.ui.screen.dashboard.composbales.WeeklyOverviewCard
+import com.example.quizzy.ui.screen.dashboard.states.DashboardUiState
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

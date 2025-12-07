@@ -1,4 +1,4 @@
-package com.example.quizzy.ui.screen.home.states
+package com.example.quizzy.ui.screen.dashboard.states
 
 import com.example.quizzy.domain.model.Result
 

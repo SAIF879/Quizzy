@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -87,7 +88,7 @@ fun LoginScreen(
                     modifier = Modifier
                         .size(20.dp)
                         .offset(x = 150.dp, y = 120.dp)
-                        .background(Color.Red, CircleShape)
+                        .background(Color(0xFFFFDF92), CircleShape)
                 )
 
                 // Left dot
@@ -95,13 +96,52 @@ fun LoginScreen(
                     modifier = Modifier
                         .size(20.dp)
                         .offset(x = (-150).dp, y = 80.dp)
-                        .background(Color.Red, CircleShape)
+                        .background(Color(0XFFDFF8FB), CircleShape)
                 )
+
+                // Vector image below left dot, tilted
+                Image(
+                    painter = painterResource(id = R.drawable.ic_pie), // replace with your vector asset
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(40.dp) // adjust size as needed
+                        .offset(x = (-200).dp, y = 150.dp) // closer to left edge, below left dot
+                )
+
+                Image(
+                    painter = painterResource(id = R.drawable.ic_pw),
+                    contentDescription = null,
+                    modifier = Modifier.padding(top = 25.dp)
+                        .size(50.dp) // adjust size as needed
+                        .offset(
+                            x = (600.dp * 0.1f), // 30% of parent Box width
+                            y = (-250).dp          // move above main circle
+                        )
+                )
+
+//                Image(
+//                    painter = painterResource(id = R.drawable.ic_ellipse_left),
+//                    contentDescription = null,
+//                    modifier = Modifier
+//                        .size(40.dp)
+//                        .offset(x = (-280).dp, y = (-220).dp)
+//                )
+//
+//                // Top-right decorative vector
+//                Image(
+//                    painter = painterResource(id = R.drawable.ic_ellipse_right),
+//                    contentDescription = null,
+//                    modifier = Modifier
+//                        .size(40.dp)
+//                        .offset(x = (280).dp, y = (-220).dp)
+//                )
+
             }
 
 
             WelcomeText("Welcome to\nQuizzy!")
         }
+
 
 
         Column(modifier = Modifier.fillMaxWidth() ) {
