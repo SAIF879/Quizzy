@@ -20,7 +20,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.quizzy.R
+import com.example.quizzy.domain.model.DashboardErrorState
 import com.example.quizzy.ui.screen.home.composbales.DashboardTopAppBar
+import com.example.quizzy.ui.screen.home.composbales.ShimmerLoadingScreen
 import com.example.quizzy.ui.screen.home.composbales.SingleStatCard
 import com.example.quizzy.ui.screen.home.composbales.WatchCard
 import com.example.quizzy.ui.screen.home.composbales.WeeklyOverviewCard
@@ -36,22 +38,12 @@ fun DashboardScreen(
 
     when (state) {
         is DashboardUiState.Loading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
+            ShimmerLoadingScreen()
         }
 
         is DashboardUiState.Error -> {
             val message = (state as DashboardUiState.Error).message
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "Error: $message", color = Color.Red)
-            }
+            DashboardErrorState(message)
         }
 
         is DashboardUiState.Success -> {

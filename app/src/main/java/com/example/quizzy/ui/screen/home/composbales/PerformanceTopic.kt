@@ -28,9 +28,9 @@ fun PerformanceTopic(topic: String, performance: Performance) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = topic, fontSize = 16.sp, color = Color.Gray)
+        Text(text = topic, fontSize = 18.sp, color = Color.Black)
         val (icon, color) = when (performance) {
-            Performance.UP -> Icons.Default.KeyboardArrowUp to Color(0xFF4CAF50) // Green
+            Performance.UP -> Icons.Default.KeyboardArrowUp to Color(0xFF4CAF50)
             Performance.DOWN -> Icons.Default.KeyboardArrowDown to Color.Red
         }
         Icon(

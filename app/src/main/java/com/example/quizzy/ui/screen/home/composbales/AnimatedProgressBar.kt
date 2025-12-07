@@ -44,8 +44,10 @@ fun AnimatedProgressBar(percentage: Int) {
         modifier = Modifier
             .fillMaxWidth()
             .height(8.dp),
-        color = Color.Red,
+        color =Color(0XFFFF6776),
         trackColor = Color.Red.copy(alpha = 0.2f),
-        strokeCap = StrokeCap.Round
+        strokeCap = StrokeCap.Round,
+        gapSize = (-8).dp,
+        drawStopIndicator = {}
     )
 }

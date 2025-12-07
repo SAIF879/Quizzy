@@ -1,6 +1,5 @@
 package com.example.quizzy.ui.screen.home.composbales
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -82,11 +81,12 @@ fun WatchCard(
                 .padding(5.dp),
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Black,
+                containerColor = Color(0XFF1B2124),
                 contentColor = Color.White
             )
         ) {
             Row(
+                modifier = Modifier.padding(vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {

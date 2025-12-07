@@ -52,8 +52,9 @@ fun WeeklyOverviewCard(
 
         Text(
             text = weeklyOverview.overallAccuracy.label,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 16.sp
+            fontWeight = FontWeight.Normal,
+            fontSize = 16.sp,
+            color = Color(0xFF1B2124)
         )
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -77,7 +78,7 @@ fun WeeklyOverviewCard(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Black,
+                containerColor = Color(0XFF1B2124),
                 contentColor = Color.White
             )
         ) {
@@ -85,7 +86,7 @@ fun WeeklyOverviewCard(
                 text = "More Details",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(vertical = 4.dp)
+                modifier = Modifier.padding(vertical = 8.dp)
             )
         }
     }
@@ -101,7 +102,8 @@ private fun SectionHeader(title: String, imageRes: Int) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = title, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
+            Text(text = title, fontSize = 21.sp, fontWeight = FontWeight.SemiBold ,
+                color = Color(0xFF1B2124))
 
             Image(
                 painter = painterResource(id = imageRes),
