@@ -51,8 +51,6 @@ fun DashboardScreen(
             val student = result.student
             val todaySummary = result.todaySummary
             val weeklyOverview = result.weeklyOverview
-
-
             Scaffold(
                 modifier = Modifier.fillMaxSize(),
                 topBar = {

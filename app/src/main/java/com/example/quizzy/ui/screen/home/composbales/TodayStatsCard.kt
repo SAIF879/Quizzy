@@ -5,9 +5,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -33,8 +35,9 @@ fun SingleStatCard(
 
     Card(
         modifier = modifier
-            .height(120.dp),
-        shape = RoundedCornerShape(15.dp),
+            .wrapContentHeight()
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(12.dp),
         border = BorderStroke(1.dp, color),
         colors = CardDefaults.cardColors(
             containerColor = cardColor
@@ -42,25 +45,27 @@ fun SingleStatCard(
     ) {
         Column(
             modifier = Modifier
-                .padding(20.dp)
+                .padding(16.dp)
                 .fillMaxSize()
         ) {
             Image(
                 painter = painterResource(id = iconRes),
                 contentDescription = title,
-                modifier = Modifier.size(32.dp)
+                modifier = Modifier.size(28.dp).padding(bottom = 5.dp)
             )
-            Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = title,
-                fontSize = 16.sp,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Normal,
                 color = Color.Black.copy(alpha = 0.8f)
             )
+
             Spacer(modifier = Modifier.height(4.dp))
+
             Text(
                 text = value,
                 fontSize = 22.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Bold,
                 color = valueColor
             )
         }
