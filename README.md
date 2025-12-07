@@ -42,9 +42,4 @@ To get the project up and running, follow these steps:
 *   A Firebase project set up.
 *   clone this repo
 *   run in android studio
-
-
-
-
-1.  Clone this repository:
     
