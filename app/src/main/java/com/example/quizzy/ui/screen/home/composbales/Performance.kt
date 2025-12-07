@@ -1,5 +1,6 @@
 package com.example.quizzy.ui.screen.home.composbales
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -29,7 +30,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PaintingStyle.Companion.Stroke
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,7 +55,6 @@ fun WeeklyOverviewCard(modifier: Modifier = Modifier) {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // --- Quiz Streak Section ---
         SectionHeader(title = "Quiz Streak", imageRes = R.drawable.ic_question_card)
         QuizStreak()
         SectionHeader(title = "Accuracy", imageRes = R.drawable.ic_target)
@@ -93,12 +96,12 @@ private fun SectionHeader(title: String, imageRes: Int) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = title, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Text(text = title, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
 
             Image(
                 painter = painterResource(id = imageRes),
                 contentDescription = title,
-                modifier = Modifier.size(32.dp)
+                modifier = Modifier.size(44.dp)
             )
         }
 
@@ -130,28 +133,43 @@ private fun QuizStreak() {
 private fun StreakCircle(day: String, completed: Boolean) {
     val backgroundColor = if (completed) Color(0xFF4CAF50) else Color.Transparent
     val contentColor = if (completed) Color.White else Color.Gray
-    val border = if (completed) null else Modifier.border(1.dp, Color.LightGray, CircleShape)
 
     Box(
         modifier = Modifier
             .size(32.dp)
-            .then(border ?: Modifier)
-            .background(backgroundColor, CircleShape)
             .clip(CircleShape),
         contentAlignment = Alignment.Center
     ) {
         if (completed) {
             Icon(
-                imageVector = Icons.Default.Check,
+                painter = painterResource(id = R.drawable.ic_check),
                 contentDescription = "Completed",
-                tint = contentColor,
-                modifier = Modifier.size(20.dp)
+                tint = Color.Unspecified,
+                modifier = Modifier.size(30.dp)
             )
         } else {
-            Text(text = day, color = contentColor, fontWeight = FontWeight.Bold)
+            // Dashed circular border
+            Canvas(modifier = Modifier.matchParentSize()) {
+                drawCircle(
+                    color = Color.LightGray,
+                    style = Stroke(
+                        width = 2.dp.toPx(),
+                        pathEffect = PathEffect.dashPathEffect(
+                            floatArrayOf(6.dp.toPx(), 4.dp.toPx())
+                        )
+                    )
+                )
+            }
+
+            Text(
+                text = day,
+                color = contentColor,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }
+
 
 enum class Performance { UP, DOWN }
 

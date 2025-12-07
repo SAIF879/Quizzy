@@ -60,21 +60,21 @@ fun WatchCard(
 
         Text(
             text = "Focused",
-            fontSize = 24.sp,
+            fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             color = borderColor
         )
 
         Text(
             text = "\"Struggles with Apply-level Math today.\"",
-            fontSize = 14.sp,
+            fontSize = 16.sp,
             textAlign = TextAlign.Center,
             color = Color.Gray
         )
 
         Button(
             onClick = { /* TODO: Handle watch video click */ },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(5.dp),
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Black,

@@ -33,8 +33,8 @@ fun SingleStatCard(
 
     Card(
         modifier = modifier
-            .height(130.dp),
-        shape = RoundedCornerShape(20.dp),
+            .height(120.dp),
+        shape = RoundedCornerShape(15.dp),
         border = BorderStroke(1.dp, color),
         colors = CardDefaults.cardColors(
             containerColor = cardColor
@@ -42,7 +42,7 @@ fun SingleStatCard(
     ) {
         Column(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(20.dp)
                 .fillMaxSize()
         ) {
             Image(
@@ -60,7 +60,7 @@ fun SingleStatCard(
             Text(
                 text = value,
                 fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.SemiBold,
                 color = valueColor
             )
         }

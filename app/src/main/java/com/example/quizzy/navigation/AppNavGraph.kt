@@ -9,7 +9,7 @@ import com.example.quizzy.ui.screen.login.LoginScreen
 import com.example.quizzy.ui.screen.notification.NotificationScreen
 
 @Composable
-fun AppNavGraph(startDestination: String = AppRoute.Login.route) {
+fun AppNavGraph(startDestination: String = AppRoute.Dashboard.route) {
     val navController = rememberNavController()
 
     NavHost(

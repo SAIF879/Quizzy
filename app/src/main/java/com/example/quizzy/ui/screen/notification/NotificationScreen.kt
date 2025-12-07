@@ -17,13 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.Logout
-import androidx.compose.material.icons.automirrored.outlined.Logout
-import androidx.compose.material.icons.filled.Language
-import androidx.compose.material.icons.filled.SupervisorAccount
-import androidx.compose.material.icons.outlined.SupervisorAccount
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -36,11 +30,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.quizzy.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,18 +45,19 @@ fun NotificationScreen(
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = {
-                    Text(
-                        "Notifications & Settings",
-                        fontWeight = FontWeight.Bold
-                    )
+                      Text(
+                          "Notifications & Settings",
+                          fontWeight = FontWeight.SemiBold
+                      )
                 },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            painter = painterResource(id = R.drawable.left_nav_icons),
+                            modifier = Modifier.size(28.dp),
+                            contentDescription = "back_press icon"
                         )
                     }
                 },
@@ -80,7 +76,6 @@ fun NotificationScreen(
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // --- Notifications Section ---
             item {
                 Text(
                     text = "Notifications",
@@ -93,21 +88,21 @@ fun NotificationScreen(
                 NotificationItem(
                     title = "Missed quiz in physics in yesterday",
                     timestamp = "2 hours ago",
-                    indicatorColor = Color(0xFFFFA726) // Orange
+                    indicatorColor = Color(0xFFFFA726)
                 )
             }
             item {
                 NotificationItem(
                     title = "Badge earned",
                     timestamp = "8 hours ago",
-                    indicatorColor = Color(0xFFAB47BC) // Purple
+                    indicatorColor = Color(0xFFAB47BC)
                 )
             }
             item {
                 NotificationItem(
                     title = "Teacher Note",
                     timestamp = "1 day ago",
-                    indicatorColor = Color(0xFF66BB6A) // Green
+                    indicatorColor = Color(0xFF66BB6A)
                 )
             }
             item {
@@ -123,15 +118,15 @@ fun NotificationScreen(
             }
             item {
                 SettingsItem(
-                    icon = Icons.Outlined.SupervisorAccount,
+                    iconRes = R.drawable.ic_switch_child,
                     title = "Switch Child",
                     subtitle = "Change active child profile",
-                    onClick = {  }
+                    onClick = {  },
                 )
             }
             item {
                 SettingsItem(
-                    icon = Icons.Default.Language,
+                    iconRes = R.drawable.ic_language,
                     title = "Language",
                     subtitle = "English",
                     onClick = {  }
@@ -139,11 +134,11 @@ fun NotificationScreen(
             }
             item {
                 SettingsItem(
-                    icon = Icons.AutoMirrored.Outlined.Logout,
+                    iconRes = R.drawable.ic_log_out,
                     title = "Logout",
                     subtitle = "Sign out of your account",
                     onClick = { },
-                    contentColor = Color.Black
+                    contentColor = Color(0xFFFF6776)
                 )
             }
         }
@@ -159,7 +154,7 @@ fun NotificationItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(IntrinsicSize.Min) // Ensures row children can fill height
+            .height(IntrinsicSize.Min)
             .clip(RoundedCornerShape(
                 topStart = 0.dp,
                 bottomStart = 0.dp,
@@ -195,7 +190,7 @@ fun NotificationItem(
 
 @Composable
 fun SettingsItem(
-    icon: ImageVector,
+    iconRes: Int,
     title: String,
     subtitle: String,
     onClick: () -> Unit,
@@ -210,17 +205,17 @@ fun SettingsItem(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Icon(
-            imageVector = icon,
+            painter = painterResource(id = iconRes),
             contentDescription = title,
             tint = contentColor,
             modifier = Modifier.size(28.dp)
         )
+
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
-                color = contentColor
             )
             Text(
                 text = subtitle,
@@ -230,6 +225,7 @@ fun SettingsItem(
         }
     }
 }
+
 
 @Preview(showBackground = true, device = "id:pixel_6")
 @Composable
