@@ -1,14 +1,11 @@
 package com.example.quizzy.ui.screen.login.states
+data class LoginUiState(
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null,
+    val user: LoginUser? = null
+)
 
-sealed class LoginState {
-    object Idle : LoginState()
-    object Loading : LoginState()
-    data class Success(
-        val schoolId: String,
-        val studentId: String,
-        val uid: String
-    ) : LoginState()
-
-    data class Error(val message: String) : LoginState()
-}
-
+data class LoginUser(
+    val schoolId: String,
+    val studentId: String,
+)

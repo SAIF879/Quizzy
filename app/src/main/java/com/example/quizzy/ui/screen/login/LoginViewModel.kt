@@ -20,6 +20,7 @@ class LoginViewModel(
     fun login(schoolId: String, studentId: String) {
         val school = schoolId.trim()
         val student = studentId.trim()
+
         if (school.isEmpty() || student.isEmpty()) {
             _state.value = LoginUiState(errorMessage = "Please enter School ID and Student ID")
             return
@@ -27,11 +28,11 @@ class LoginViewModel(
 
         viewModelScope.launch {
             _state.value = LoginUiState(isLoading = true)
+
             runCatching { firebaseAuth.signInAnonymously().await() }
                 .onSuccess { result ->
-                    val user = result.user
-                    if (user != null) {
-                        _state.value = LoginUiState(user = LoginUser(school, student, user.uid))
+                    if (result.user != null) {
+                        _state.value = LoginUiState(user = LoginUser(school, student))
                     } else {
                         _state.value = LoginUiState(errorMessage = "Login failed: user is null")
                     }
@@ -41,6 +42,4 @@ class LoginViewModel(
                 }
         }
     }
-
 }
-
